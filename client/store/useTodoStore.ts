@@ -1,9 +1,20 @@
 import { create } from "zustand";
 import { TodoStore, Todo } from "../type";
+import axios from "axios";
 
 const useStore = create<TodoStore>((set) => ({
   todos: [],
   input: "",
+  fetchTodos: async () => {
+    try {
+      const response = await axios.get(
+        "http://localhost:8000/api/todo/getTodo"
+      );
+      set({ todos: response.data });
+    } catch (error) {
+      console.error("Failed to fetch todos:", error);
+    }
+  },
   setInput: (input) => set({ input }),
   addTodo: () => {
     set((state) => {

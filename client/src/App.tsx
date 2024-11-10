@@ -1,5 +1,6 @@
 import { MdDelete } from "react-icons/md";
 import useStore from "../store/useTodoStore";
+import { useEffect } from "react";
 
 const App = () => {
   const todos = useStore((state) => state.todos);
@@ -8,7 +9,11 @@ const App = () => {
   const addTodo = useStore((state) => state.addTodo);
   const deleteTodo = useStore((state) => state.deleteTodo);
   const toggleTodo = useStore((state) => state.toggleTodo);
+  const fetchTodos = useStore((state) => state.fetchTodos);
 
+  useEffect(() => {
+    fetchTodos();
+  }, [fetchTodos]);
   return (
     <div className="bg-gradient-to-r from-purple-500 to-blue-500 min-h-screen flex flex-col items-center p-8">
       <h1 className="text-4xl font-bold text-white mb-8">To-Do App</h1>

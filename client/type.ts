@@ -11,4 +11,5 @@ export interface TodoStore {
   addTodo: () => void;
   deleteTodo: (id: number) => void;
   toggleTodo: (id: number) => void;
+  fetchTodos: () => Promise<void>;
 }
