@@ -6,7 +6,7 @@ const App = () => {
   const todos = useStore((state) => state.todos);
   const input = useStore((state) => state.input);
   const setInput = useStore((state) => state.setInput);
-  const addTodo = useStore((state) => state.addTodo);
+  const postTodo = useStore((state) => state.postTodo);
   const deleteTodo = useStore((state) => state.deleteTodo);
   const toggleTodo = useStore((state) => state.toggleTodo);
   const fetchTodos = useStore((state) => state.fetchTodos);
@@ -29,7 +29,7 @@ const App = () => {
             autoFocus
           />
           <button
-            onClick={addTodo}
+            onClick={() => postTodo(input)}
             className="ml-4 px-6 py-2 bg-blue-500 text-white font-semibold rounded-lg shadow-md hover:bg-blue-600 focus:outline-none focus:ring focus:ring-blue-300 transition"
           >
             Add
@@ -39,7 +39,7 @@ const App = () => {
         <ul className="divide-y divide-gray-200">
           {todos.map((todo) => (
             <li
-              key={todo.id}
+              key={todo._id}
               className="py-4 flex items-center justify-between"
             >
               <span
@@ -53,7 +53,7 @@ const App = () => {
               </span>
               <div className="flex items-center space-x-2">
                 <button
-                  onClick={() => toggleTodo(todo.id)}
+                  onClick={() => toggleTodo(todo._id)}
                   className={`px-4 py-1 rounded-lg text-sm font-medium ${
                     todo.completed
                       ? "bg-yellow-400 text-yellow-900 hover:bg-yellow-500"
@@ -63,7 +63,7 @@ const App = () => {
                   {todo.completed ? "Undo" : "Complete"}
                 </button>
                 <button
-                  onClick={() => deleteTodo(todo.id)}
+                  onClick={() => deleteTodo(todo._id)}
                   className="text-red-500 hover:text-red-600 focus:outline-none transition"
                 >
                   <MdDelete size={24} />

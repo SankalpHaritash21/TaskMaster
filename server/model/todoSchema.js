@@ -1,23 +1,21 @@
-const mongoose = require("mongoose");
+import { Schema, model } from "mongoose";
 
-const todoSchema = new mongoose.Schema(
+const todoSchema = new Schema(
   {
-    id: {
-      type: Number,
-      required: true,
-    },
     title: {
       type: String,
       required: true,
+      trim: true,
     },
     completed: {
       type: Boolean,
+      default: false,
       required: true,
     },
   },
   { timestamps: true }
 );
 
-const TodoSchema = mongoose.model("Todo", todoSchema);
+const TodoSchema = model("Todo", todoSchema);
 
-module.exports = TodoSchema;
+export default TodoSchema;

@@ -1,22 +1,31 @@
-const express = require("express");
-const cors = require("cors");
-require("dotenv").config();
-const router = require("./routes/todo");
-PORT = 8000;
+import cors from "cors";
+import dotenv from "dotenv";
+import express from "express";
+import router from "./routes/todo.js";
+import ConnectDB from "./connection/db.js";
+
+dotenv.config();
 
 const app = express();
 const corsOptions = {
-  origin: "https://example.com",
+  origin: process.env.ORIGIN,
   methods: ["GET", "POST", "PUT", "DELETE"],
   allowedHeaders: ["Content-Type", "Authorization"],
 };
+const PORT = process.env.PORT || 8001;
+
 app.use(cors(corsOptions));
 app.use(express.json());
 
-require("./connection/db");
-
 app.use("/api/todo", router);
 
-app.listen(PORT, () => {
-  console.log(`Server is running on port ${PORT}`);
-});
+ConnectDB()
+  .then(() => {
+    console.log("Database connected");
+    app.listen(PORT, () => {
+      console.log(`Server is running on port ${PORT}`);
+    });
+  })
+  .catch((error) => {
+    console.error("Database connection failed:", error);
+  });
